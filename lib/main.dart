@@ -1,3 +1,4 @@
+import 'package:cowin_app/screens/ConfirmPage.dart';
 import 'package:cowin_app/screens/HomePage.dart';
 import 'package:cowin_app/screens/LandingPage.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ void main() {
     initialRoute: LandingPage.id,
     routes: {
       LandingPage.id: (context) => LandingPage(),
-      HomePage.id: (context) => HomePage()
+      HomePage.id: (context) => HomePage(),
+      ConfirmPage.id: (context) => ConfirmPage()
     },
   ));
 }

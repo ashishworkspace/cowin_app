@@ -1,6 +1,7 @@
 import 'package:cowin_app/constants/Constants.dart';
 import 'package:cowin_app/constants/validator.dart';
 import 'package:cowin_app/custom/CustomTextField.dart';
+import 'package:cowin_app/screens/ConfirmPage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,11 @@ class _HomePageState extends State<HomePage> {
   String _selectedTimeSlot = "09:00AM-11:00AM";
   List<DropdownMenuItem<String>> _listDropDownItems = [];
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String userName;
+  String mobileNumber;
+  String pinCode;
+  String center;
+  String timeSlot;
 
   // User-Defined methods
   void _loopTimeSlot(List<String> passList) {
@@ -36,7 +42,16 @@ class _HomePageState extends State<HomePage> {
 
   void validatorCheck() {
     if (_formKey.currentState.validate()) {
-      print("Validated");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ConfirmPage(
+                    userName: userName,
+                    center: center,
+                    mobileNumber: mobileNumber,
+                    pinCode: pinCode,
+                    timeSlot: timeSlot,
+                  )));
     } else {
       print("Not Validated");
     }
@@ -61,33 +76,34 @@ class _HomePageState extends State<HomePage> {
                 CustomTextField(
                     hintTextInput: "Name",
                     validator: validatorName,
-                    onchage: (value) => {print(value)}),
+                    onchage: (value) => {userName = value}),
                 CustomTextField(
                     keyboard: TextInputType.phone,
                     validator: (_mobileNumber) => validateMobile(_mobileNumber),
                     hintTextInput: "Mobile Number",
-                    onchage: (value) => {print(value)}),
+                    onchage: (value) => {mobileNumber = value}),
                 CustomTextField(
                     keyboard: TextInputType.number,
                     validator: validatorPinCode,
                     hintTextInput: "Pincode",
-                    onchage: (mobileNumber) => {
-                          print(mobileNumber),
-                        }),
+                    onchage: (value) => {pinCode = value}),
                 CustomTextField(
                     keyboard: TextInputType.text,
                     validator: validatorCenter,
                     hintTextInput: "Center",
-                    onchage: (value) => {print(value)}),
+                    onchage: (value) => {center = value}),
                 DropdownButton<String>(
                   value: _selectedTimeSlot,
                   items: _listDropDownItems,
                   onChanged: (value) => {
                     setState(() {
                       _selectedTimeSlot = value;
-                      print(_selectedTimeSlot);
+                      timeSlot = _selectedTimeSlot;
                     })
                   },
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 ElevatedButton(
                     onPressed: () {
