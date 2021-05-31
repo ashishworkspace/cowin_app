@@ -125,12 +125,13 @@ class _HomePageState extends State<HomePage> {
                         })
                       },
                     ),
+                    SizedBox(
+                      width: 4,
+                    ),
                     ToggleSwitch(
                       labels: doseLabels,
                       cornerRadius: 5,
-                      fontSize: 17,
-                      minWidth: 80,
-                      minHeight: 35,
+                      fontSize: 13,
                       inactiveBgColor: Colors.grey[200],
                       onToggle: (value) => {
                         toggleValue = value,
