@@ -1,7 +1,9 @@
 import 'package:cowin_app/constants/Constants.dart';
 import 'package:cowin_app/constants/validator.dart';
 import 'package:cowin_app/custom/CustomTextField.dart';
+import 'package:cowin_app/screens/ConfirmPage.dart';
 import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = "HomePage";
@@ -22,21 +24,42 @@ class _HomePageState extends State<HomePage> {
   String _selectedTimeSlot = "09:00AM-11:00AM";
   List<DropdownMenuItem<String>> _listDropDownItems = [];
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String userName;
+  String mobileNumber;
+  String pinCode;
+  String center;
+  String timeSlot;
+  int toggleValue;
 
   // User-Defined methods
   void _loopTimeSlot(List<String> passList) {
     for (int i = 0; i < passList.length; i++) {
-      _listDropDownItems.add(DropdownMenuItem(
+      _listDropDownItems.add(
+        DropdownMenuItem(
           child: Text(
             passList[i],
           ),
-          value: passList[i]));
+          value: passList[i],
+        ),
+      );
     }
   }
 
   void validatorCheck() {
     if (_formKey.currentState.validate()) {
-      print("Validated");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmPage(
+            userName: userName,
+            center: center,
+            mobileNumber: mobileNumber,
+            pinCode: pinCode,
+            timeSlot: timeSlot,
+            indexToggle: toggleValue,
+          ),
+        ),
+      );
     } else {
       print("Not Validated");
     }
@@ -59,35 +82,64 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text("Register", style: registerText),
                 CustomTextField(
-                    hintTextInput: "Name",
-                    validator: validatorName,
-                    onchage: (value) => {print(value)}),
-                CustomTextField(
-                    keyboard: TextInputType.phone,
-                    validator: (_mobileNumber) => validateMobile(_mobileNumber),
-                    hintTextInput: "Mobile Number",
-                    onchage: (value) => {print(value)}),
-                CustomTextField(
-                    keyboard: TextInputType.number,
-                    validator: validatorPinCode,
-                    hintTextInput: "Pincode",
-                    onchage: (mobileNumber) => {
-                          print(mobileNumber),
-                        }),
-                CustomTextField(
-                    keyboard: TextInputType.text,
-                    validator: validatorCenter,
-                    hintTextInput: "Center",
-                    onchage: (value) => {print(value)}),
-                DropdownButton<String>(
-                  value: _selectedTimeSlot,
-                  items: _listDropDownItems,
-                  onChanged: (value) => {
-                    setState(() {
-                      _selectedTimeSlot = value;
-                      print(_selectedTimeSlot);
-                    })
+                  hintTextInput: "Name",
+                  validator: validatorName,
+                  onchage: (value) => {
+                    userName = value,
                   },
+                ),
+                CustomTextField(
+                  keyboard: TextInputType.phone,
+                  validator: (_mobileNumber) => validateMobile(_mobileNumber),
+                  hintTextInput: "Mobile Number",
+                  onchage: (value) => {
+                    mobileNumber = value,
+                  },
+                ),
+                CustomTextField(
+                  keyboard: TextInputType.number,
+                  validator: validatorPinCode,
+                  hintTextInput: "Pincode",
+                  onchage: (value) => {
+                    pinCode = value,
+                  },
+                ),
+                CustomTextField(
+                  keyboard: TextInputType.text,
+                  validator: validatorCenter,
+                  hintTextInput: "Center",
+                  onchage: (value) => {
+                    center = value,
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    DropdownButton<String>(
+                      value: _selectedTimeSlot,
+                      items: _listDropDownItems,
+                      onChanged: (value) => {
+                        setState(() {
+                          _selectedTimeSlot = value;
+                          timeSlot = _selectedTimeSlot;
+                        })
+                      },
+                    ),
+                    ToggleSwitch(
+                      labels: doseLabels,
+                      cornerRadius: 5,
+                      fontSize: 17,
+                      minWidth: 80,
+                      minHeight: 35,
+                      inactiveBgColor: Colors.grey[200],
+                      onToggle: (value) => {
+                        toggleValue = value,
+                      },
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
                 ),
                 ElevatedButton(
                     onPressed: () {
