@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
   String mobileNumber;
   String pinCode;
   String center;
-  String timeSlot;
-  int toggleValue;
+  String timeSlot = "09:00AM-11:00AM";
+  int toggleValue = 0;
 
   // User-Defined methods
   void _loopTimeSlot(List<String> passList) {
