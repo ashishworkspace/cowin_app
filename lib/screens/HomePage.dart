@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
   String mobileNumber;
   String pinCode;
   String center;
-  String timeSlot;
-  int toggleValue;
+  String timeSlot = "09:00AM-11:00AM";
+  int toggleValue = 0;
 
   // User-Defined methods
   void _loopTimeSlot(List<String> passList) {
@@ -113,7 +113,6 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     DropdownButton<String>(
                       value: _selectedTimeSlot,
@@ -125,22 +124,18 @@ class _HomePageState extends State<HomePage> {
                         })
                       },
                     ),
-                    SizedBox(
-                      width: 4,
-                    ),
                     ToggleSwitch(
                       labels: doseLabels,
                       cornerRadius: 5,
                       fontSize: 13,
+                      minWidth: 73,
+                      minHeight: 35,
                       inactiveBgColor: Colors.grey[200],
                       onToggle: (value) => {
                         toggleValue = value,
                       },
-                    )
+                    ),
                   ],
-                ),
-                SizedBox(
-                  height: 5,
                 ),
                 ElevatedButton(
                     onPressed: () {

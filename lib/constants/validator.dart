@@ -12,7 +12,7 @@ String validateMobile(String value) {
 String validatorPinCode(String value) {
   if (value.length == 0) {
     return "Pincode Required";
-  } else if (value.length > 6 && value.length < 6) {
+  } else if (value.length > 6 || value.length < 6) {
     return "Invalid  Pincode";
   } else {
     return null;
